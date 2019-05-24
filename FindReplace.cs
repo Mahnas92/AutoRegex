@@ -5,18 +5,18 @@ namespace AutoRegex
 {
     class FindReplace
     {
-        private String FindExpression { get; }
+        private String MatchPattern { get; }
         private String ReplacePattern { get; }
 
-        public FindReplace(String findExpression, String replacePattern)
+        public FindReplace(String matchPattern, String replacePattern)
         {
-            FindExpression = findExpression;
+            MatchPattern = matchPattern;
             ReplacePattern = replacePattern;
         }
 
         public String ExecuteOperation(String strInput)
         {
-            return Regex.Replace(strInput, FindExpression, ReplacePattern);
+            return Regex.Replace(strInput, MatchPattern, ReplacePattern);
         }
     }
 }
