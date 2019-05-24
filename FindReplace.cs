@@ -1,36 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace AutoRegex
 {
     class FindReplace
     {
-        private List<Pair> fnrList;
+        private String FindExpression { get; }
+        private String ReplacePattern { get; }
 
-        FindReplace()
+        public FindReplace(String findExpression, String replacePattern)
         {
-            fnrList = new List<Pair>();
+            FindExpression = findExpression;
+            ReplacePattern = replacePattern;
         }
-        
-        public void Add(string find, string replace)
+
+        public String ExecuteOperation(String strInput)
         {
-            fnrList.Add(new Pair(find, replace));
-        }
-    }
-
-
-    struct Pair
-    {
-        public string Find { get; }
-        public string Replace { get; }
-
-        public Pair(String find, String replace)
-        {
-            Find = find;
-            Replace = replace;
+            return Regex.Replace(strInput, FindExpression, ReplacePattern);
         }
     }
 }
