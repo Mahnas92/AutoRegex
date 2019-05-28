@@ -14,7 +14,7 @@ namespace AutoRegex
             ReplacePattern = replacePattern;
         }
 
-        public String ExecuteOperation(String strInput)
+        public String Execute(String strInput)
         {
             return Regex.Replace(strInput, MatchPattern, ReplacePattern);
         }

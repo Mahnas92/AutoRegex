@@ -15,11 +15,22 @@ namespace AutoRegex
         public Program()
         {
             regexSequence = new List<FindReplace>();
+            // Read Sequence of Regex Operations and save in regexSequence
+            // Read the input data
+            // For each squence item, execute on all input lines
+            // Print result
+
+
+
             testPrep1();
             testPrep2();
 
-            // Quit
-            Console.WriteLine("Press Enter to Continue...");
+            PressEnter("to Quit");
+        }
+
+        private static void PressEnter(string motivation)
+        {
+            Console.WriteLine("Press Enter " + motivation + "...");
             Console.ReadLine();
         }
 
@@ -27,7 +38,7 @@ namespace AutoRegex
         {
             FindReplace fnr = new FindReplace("([0-9]{6,6})([0-9]{2,2})", @"$1-$2");
             string orig = "9207112898";
-            string result = fnr.ExecuteOperation(orig);
+            string result = fnr.Execute(orig);
             Console.WriteLine("Original:\t{0} \nResult: \t{1}", orig, result);
         }
 
@@ -35,7 +46,7 @@ namespace AutoRegex
         {
             FindReplace fnr = new FindReplace("(.*)@(.*)(.*\\.com)", "Mail-user: \"$1\" and Mail-server: \"$2$3\" on the domain: \"$3\"");
             string orig = "user@sub.mail.com";
-            string result = fnr.ExecuteOperation(orig);
+            string result = fnr.Execute(orig);
             Console.WriteLine("Original:\t{0} \nResult: \t{1}", orig, result);
         }
     }
