@@ -20,8 +20,6 @@ namespace AutoRegex
             // For each squence item, execute on all input lines
             // Print result
 
-
-
             testPrep1();
             testPrep2();
 
@@ -44,7 +42,7 @@ namespace AutoRegex
 
         private void testPrep2()
         {
-            FindReplace fnr = new FindReplace("(.*)@(.*)(.*\\.com)", "Mail-user: \"$1\" and Mail-server: \"$2$3\" on the domain: \"$3\"");
+            FindReplace fnr = new FindReplace("(.*)@(.*\\.com)", "Mail-user: \"$1\" and Mail-server: \"$2$3\" on the domain: \"$3\"");
             string orig = "user@sub.mail.com";
             string result = fnr.Execute(orig);
             Console.WriteLine("Original:\t{0} \nResult: \t{1}", orig, result);
