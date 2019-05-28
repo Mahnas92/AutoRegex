@@ -9,13 +9,18 @@ namespace AutoRegex
 
         static void Main(string[] args)
         {
-            new Program();
+            new Program("inputFilePath.txt");
         }
 
-        public Program()
+        public Program(String inputFilePath)
         {
+            // Init structures
+            FileManager fm = new FileManager(inputFilePath);
             regexSequence = new List<FindReplace>();
+
             // Read Sequence of Regex Operations and save in regexSequence
+            parse(fm.ReadInput());
+
             // Read the input data
             // For each squence item, execute on all input lines
             // Print result
@@ -30,6 +35,23 @@ namespace AutoRegex
         {
             Console.WriteLine("Press Enter " + motivation + "...");
             Console.ReadLine();
+        }
+
+        private void parse(String[] lines)
+        {
+            bool willHavePairNextTime = false;
+            String RegexPattern = "";
+            foreach (String l in lines)
+            {
+                if(l.Trim().Equals("")) { continue; }
+
+                if (!willHavePairNextTime) RegexPattern = l;
+                else
+                {
+                    regexSequence.Add(new FindReplace(RegexPattern, l));
+                }
+                willHavePairNextTime = !willHavePairNextTime;
+            }
         }
 
         private void testPrep1()
