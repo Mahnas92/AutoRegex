@@ -5,8 +5,8 @@ namespace AutoRegex
 {
     class FindReplace
     {
-        private String MatchPattern { get; }
-        private String ReplacePattern { get; }
+        public String MatchPattern { get; }
+        public String ReplacePattern { get; }
 
         public FindReplace(String matchPattern, String replacePattern)
         {

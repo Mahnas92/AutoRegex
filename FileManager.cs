@@ -14,18 +14,41 @@ namespace AutoRegex
 
         public string[] ReadRegexes() { return ReadFile(fileSets.RegexFile); }
         public string[] ReadInput() { return ReadFile(fileSets.InputFile); }
-        public void PrintOutput(String[] content) { WriteFile(fileSets.OutputFile, content); }
+        public void PrintOutput(String[] content) { WriteFile(fileSets.OutputFile, false, content); }
 
-        private string[] ReadFile(String filePath)
+        private static string[] ReadFile(String filePath)
         {
+            Console.WriteLine("Reading " + filePath);
             string[] lines = { "" };
-            lines = System.IO.File.ReadAllLines(filePath);
+            try
+            {
+                lines = System.IO.File.ReadAllLines(filePath);
+            } catch (Exception e)
+            {
+
+            }
+            
             return lines;
         }
 
-        private void WriteFile(String filePath, String[] output)
+        public Boolean log(String message)
         {
-            System.IO.File.WriteAllLines(filePath, output);
+            try
+            {
+                String[] msg = { message };
+                WriteFile("error.txt", true, msg);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void WriteFile(String filePath, Boolean append, params String[] output)
+        {
+            if (append) System.IO.File.AppendAllLines(filePath, output);
+            else System.IO.File.WriteAllLines(filePath, output);
         }
 
         struct FilePath

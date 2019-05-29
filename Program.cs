@@ -9,7 +9,7 @@ namespace AutoRegex
 
         static void Main(string[] args)
         {
-            new Program("inputFilePath.txt");
+            new Program("default.txt");
         }
 
         public Program(String inputFilePath)
@@ -19,14 +19,32 @@ namespace AutoRegex
             regexSequence = new List<FindReplace>();
 
             // Read Sequence of Regex Operations and save in regexSequence
-            parse(fm.ReadInput());
+            parse(fm.ReadRegexes())
 
             // Read the input data
-            // For each squence item, execute on all input lines
-            // Print result
+            String[] input = { "9207112898", "user@sub.mail.com", "9207112898@testmail.com" };
 
-            testPrep1();
-            testPrep2();
+            // For each squence item, execute on all input lines
+            String[] output = new String[input.Length];
+            for (int i = 0; i < output.Length; ++i)
+            {
+                output[i] = input[i];
+            }
+            foreach (FindReplace fr in regexSequence)
+            {
+                for (int i = 0; i < output.Length; ++i)
+                {
+                    output[i] = fr.Execute(output[i]);
+                }
+            }
+            /* START DEBUG */
+            for (int i = 0; i < output.Length; ++i)
+            {
+                Console.WriteLine(input[i] + "\n--->\n" + output[i] + "\n");
+            }
+            /* END DEBUG */
+
+            // Print results to file
 
             PressEnter("to Quit");
         }
@@ -40,34 +58,17 @@ namespace AutoRegex
         private void parse(String[] lines)
         {
             bool willHavePairNextTime = false;
-            String RegexPattern = "";
+            String RegexMatchPattern = "";
             foreach (String l in lines)
             {
-                if(l.Trim().Equals("")) { continue; }
+                // Break this itteration if line is empty.
+                if (l.Trim().Equals("")) continue;
 
-                if (!willHavePairNextTime) RegexPattern = l;
-                else
-                {
-                    regexSequence.Add(new FindReplace(RegexPattern, l));
-                }
+                if (!willHavePairNextTime) RegexMatchPattern = l;
+                else regexSequence.Add(new FindReplace(RegexMatchPattern, l));
+
                 willHavePairNextTime = !willHavePairNextTime;
             }
-        }
-
-        private void testPrep1()
-        {
-            FindReplace fnr = new FindReplace("([0-9]{6,6})([0-9]{2,2})", @"$1-$2");
-            string orig = "9207112898";
-            string result = fnr.Execute(orig);
-            Console.WriteLine("Original:\t{0} \nResult: \t{1}", orig, result);
-        }
-
-        private void testPrep2()
-        {
-            FindReplace fnr = new FindReplace("(.*)@(.*\\.com)", "Mail-user: \"$1\" and Mail-server: \"$2$3\" on the domain: \"$3\"");
-            string orig = "user@sub.mail.com";
-            string result = fnr.Execute(orig);
-            Console.WriteLine("Original:\t{0} \nResult: \t{1}", orig, result);
         }
     }
 }
