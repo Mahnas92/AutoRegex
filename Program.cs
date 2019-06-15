@@ -19,7 +19,7 @@ namespace AutoRegex
             regexSequence = new List<FindReplace>();
 
             // Read Sequence of Regex Operations and save in regexSequence
-            parse(fm.ReadRegexes())
+            parse(fm.ReadRegexes());
 
             // Read the input data
             String[] input = { "9207112898", "user@sub.mail.com", "9207112898@testmail.com" };
