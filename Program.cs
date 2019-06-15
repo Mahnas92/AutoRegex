@@ -26,10 +26,13 @@ namespace AutoRegex
 
             // For each squence item, execute on all input lines
             String[] output = new String[input.Length];
+            // Set initial value of each Output item to input.
+            // Necessary step, in order to simplify logic in below nesteled for-foreach statement.
             for (int i = 0; i < output.Length; ++i)
             {
                 output[i] = input[i];
             }
+            // Executes Find & Replace operation on all lines, for each FindReplace pattern-set
             foreach (FindReplace fr in regexSequence)
             {
                 for (int i = 0; i < output.Length; ++i)
@@ -45,7 +48,7 @@ namespace AutoRegex
             /* END DEBUG */
 
             // Print results to file
-
+            fm.PrintOutput(output);
             PressEnter("to Quit");
         }
 
