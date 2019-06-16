@@ -19,19 +19,20 @@ namespace AutoRegex
             regexSequence = new List<FindReplace>();
 
             // Read Sequence of Regex Operations and save in regexSequence
-            parse(fm.ReadRegexes());
+            parseRegexes(fm.ReadRegexes());
 
             // Read the input data
-            String[] input = { "9207112898", "user@sub.mail.com", "9207112898@testmail.com" };
+            String[] input = fm.ReadInput();
 
-            // For each squence item, execute on all input lines
             String[] output = new String[input.Length];
-            // Set initial value of each Output item to input.
+
             // Necessary step, in order to simplify logic in below nesteled for-foreach statement.
             for (int i = 0; i < output.Length; ++i)
             {
+                // Set initial value of each Output item to input.
                 output[i] = input[i];
             }
+
             // Executes Find & Replace operation on all lines, for each FindReplace pattern-set
             foreach (FindReplace fr in regexSequence)
             {
@@ -40,15 +41,11 @@ namespace AutoRegex
                     output[i] = fr.Execute(output[i]);
                 }
             }
-            /* START DEBUG */
-            for (int i = 0; i < output.Length; ++i)
-            {
-                Console.WriteLine(input[i] + "\n--->\n" + output[i] + "\n");
-            }
-            /* END DEBUG */
 
             // Print results to file
             fm.PrintOutput(output);
+
+            Console.WriteLine("All is good, check output-file to see results!");
             PressEnter("to Quit");
         }
 
@@ -58,7 +55,7 @@ namespace AutoRegex
             Console.ReadLine();
         }
 
-        private void parse(String[] lines)
+        private void parseRegexes(String[] lines)
         {
             bool willHavePairNextTime = false;
             String RegexMatchPattern = "";
@@ -71,6 +68,13 @@ namespace AutoRegex
                 else regexSequence.Add(new FindReplace(RegexMatchPattern, l));
 
                 willHavePairNextTime = !willHavePairNextTime;
+            }
+
+            if (regexSequence.Count == 0)
+            {
+                Console.WriteLine("Regex File either is empty, has invalid/incomplete match-replace patterns or does not exist...");
+                PressEnter("to Quit");
+                System.Environment.Exit(0);
             }
         }
     }

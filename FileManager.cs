@@ -23,7 +23,7 @@ namespace AutoRegex
         /// <returns>Returns an Array of strings, one item for each line</returns>
         private static string[] ReadFile(String filePath)
         {
-            Console.WriteLine("Reading " + filePath);
+            // Console.WriteLine("Reading " + filePath);
             string[] lines = { "" };
             try
             {
@@ -31,21 +31,31 @@ namespace AutoRegex
             }
             catch (Exception e)
             {
-
+                String errorMsg =  e.Message + "\n" + e.StackTrace;
+                if (!log(errorMsg))
+                {
+                    Console.WriteLine(errorMsg);
+                }
             }
             
             return lines;
         }
+
         /// <summary>
         /// Logs messages to a text file
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public Boolean log(String message)
+        public static Boolean log(String message)
         {
             try
             {
-                String[] msg = { message };
+                String[] msg = {
+                    "[" + System.DateTime.Now.ToShortDateString() + " " + System.DateTime.Now.ToLongTimeString() + "]",
+                    "----------------------------------------" ,
+                    message,
+                    "----------------------------------------",
+                    ""};
                 WriteFile("error.log", true, msg);
             }
             catch (Exception e)
