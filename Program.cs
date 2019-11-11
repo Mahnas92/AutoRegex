@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace AutoRegex
 {
@@ -9,13 +10,42 @@ namespace AutoRegex
 
         static void Main(string[] args)
         {
-            new Program("default.txt");
+            String inputFilePath = "input.txt";
+            String regexFilePath = "default.regex";
+            String outputFilePath = "";
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                String arg = args[i];
+                if (File.Exists(arg))
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            inputFilePath = arg;
+                            break;
+                        case 1:
+                            regexFilePath = arg;
+                                break;
+                        case 2:
+                            outputFilePath = arg;
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine("Initiating!\n\n");
+            Console.WriteLine("Set to run Regex File:\n" + regexFilePath);
+            Console.WriteLine("\n... on the Text File:\n" + inputFilePath);
+            Console.WriteLine("\n... and save it to Output File:\n"+outputFilePath);
+
+            new Program(inputFilePath, regexFilePath, outputFilePath);
         }
 
-        public Program(String inputFilePath)
+        public Program(String inputFilePath, String regexFilePath , String outputFilePath)
         {
             // Init structures
-            FileManager fm = new FileManager(inputFilePath);
+            FileManager fm = new FileManager(inputFilePath, regexFilePath, outputFilePath);
             regexSequence = new List<FindReplace>();
 
             // Read Sequence of Regex Operations and save in regexSequence
@@ -59,10 +89,11 @@ namespace AutoRegex
         {
             bool willHavePairNextTime = false;
             String RegexMatchPattern = "";
+            
             foreach (String l in lines)
             {
                 // Break this itteration if line is empty.
-                if (l.Trim().Equals("")) continue;
+                if (l.Trim().Equals("") && !willHavePairNextTime) continue;
 
                 if (!willHavePairNextTime) RegexMatchPattern = l;
                 else regexSequence.Add(new FindReplace(RegexMatchPattern, l));

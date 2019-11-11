@@ -7,9 +7,9 @@ namespace AutoRegex
 
         private FilePathSet fileSets;
 
-        public FileManager(string inputFilePath)
+        public FileManager(string inputFilePath, string regexFilePath, string outputFilePath)
         {
-            fileSets = new FilePathSet(inputFilePath);
+            fileSets = new FilePathSet(inputFilePath, regexFilePath, outputFilePath);
         }
 
         public string[] ReadRegexes() { return ReadFile(fileSets.RegexFile); }
@@ -83,11 +83,13 @@ namespace AutoRegex
             public String RegexFile { get; set; }
             public String OutputFile { get; set; }
 
-            public FilePathSet(String inputFilePath)
+            public FilePathSet(String inputFilePath, String regexFilePath, String outputFilePath)
             {
                 InputFile = inputFilePath;
-                RegexFile = inputFilePath.Replace(".txt", "") + ".regex";
-                OutputFile = inputFilePath.Replace(".txt", "") + ".output.txt";
+                RegexFile = regexFilePath;
+                OutputFile = outputFilePath;
+
+                if (OutputFile.Equals("")) OutputFile = inputFilePath.Replace(".txt", "") + ".output.txt";
             }
 
         }
