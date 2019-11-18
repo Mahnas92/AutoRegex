@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace AutoRegex
 {
@@ -73,8 +74,8 @@ namespace AutoRegex
         /// <param name="output">Lines that should be written to file</param>
         private static void WriteFile(String filePath, Boolean append, params String[] output)
         {
-            if (append) System.IO.File.AppendAllLines(filePath, output);
-            else System.IO.File.WriteAllLines(filePath, output);
+            if (append) System.IO.File.AppendAllLines(filePath, output, Encoding.UTF8);
+            else System.IO.File.WriteAllLines(filePath, output, Encoding.UTF8);
         }
 
         struct FilePathSet
