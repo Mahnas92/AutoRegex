@@ -37,7 +37,6 @@ namespace AutoRegex
             Console.WriteLine("Initiating!\n\n");
             Console.WriteLine("Set to run Regex File:\n" + regexFilePath);
             Console.WriteLine("\n... on the Text File:\n" + inputFilePath);
-            Console.WriteLine("\n... and save it to Output File:\n"+outputFilePath);
 
             new Program(inputFilePath, regexFilePath, outputFilePath);
         }
@@ -76,6 +75,8 @@ namespace AutoRegex
             fm.PrintOutput(output);
 
             Console.WriteLine("All is good, check output-file to see results!");
+            Console.WriteLine("\nOutput File:\n" + outputFilePath);
+
             PressEnter("to Quit");
         }
 
